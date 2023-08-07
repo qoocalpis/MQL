@@ -328,10 +328,9 @@ int checkFirstTrigger
 
 void OrderSendOperation(int res)
 {
-   int resultIndex;
-   double targetPrice
-   int sL;
-   int tP;
+   int resultIndex = 0;
+   double targetPrice = 0;
+
    if(res < 0)
    {
       resultIndex = iLowest(NULL,PERIOD_M15,MODE_LOW,3,1);
@@ -340,9 +339,6 @@ void OrderSendOperation(int res)
       else
          PrintFormat("iLowest() call error. Error code=%d",GetLastError());
       
-      int sL = ((Ask - targetPrice) * 1000) + ((Ask-Bid) * 1000);
-      int tP = sL * 1.5;
-      double lot = 0.1;
    }
    if(res > 0)
    {
@@ -351,11 +347,11 @@ void OrderSendOperation(int res)
          targetPrice=iHigh(Symbol(),PERIOD_M15,resultIndex);
       else
          PrintFormat("iLowest() call error. Error code=%d",GetLastError());
-      
-      int sL = ((Ask - targetPrice) * 1000) + ((Ask-Bid) * 1000);
-      int tP = sL * 1.5;
-      double lot = 0.1;
    }
+   
+   int sL = 0;
+   int tP = int(sL * 1.5);
+   double lot = 0;
    
    int ticket = OrderSend(   // 新規エントリー注文
                 Symbol(),                // 通貨ペア
